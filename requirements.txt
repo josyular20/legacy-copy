@@ -1,0 +1,2 @@
+commitizen==3.8.2
+pre-commit==3.4.0

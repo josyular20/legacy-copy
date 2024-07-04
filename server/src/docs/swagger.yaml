@@ -1,0 +1,1719 @@
+basePath: /api
+definitions:
+  docmodels.GuideDTO:
+    properties:
+      author:
+        type: string
+      author_image_url:
+        type: string
+      date:
+        type: string
+      full_text:
+        type: string
+      guide_name:
+        type: string
+      mins_read:
+        type: integer
+      sub_title:
+        type: string
+      title:
+        type: string
+    type: object
+  docmodels.PersonaDTO:
+    properties:
+      persona_description:
+        type: string
+      persona_title:
+        type: string
+      tasks:
+        items:
+          type: string
+        type: array
+    type: object
+  docmodels.ProfileDTO:
+    properties:
+      completed_onboarding_response:
+        type: boolean
+      date_of_birth:
+        type: string
+      onboarding_response:
+        type: string
+      phone_number:
+        type: string
+      user:
+        $ref: '#/definitions/docmodels.UserDTO'
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  docmodels.SubTaskDTO:
+    properties:
+      actions:
+        items:
+          type: string
+        type: array
+      actions_state:
+        items:
+          type: string
+        type: array
+      subtask_description:
+        type: string
+      subtask_name:
+        type: string
+      task_id:
+        type: string
+    type: object
+  docmodels.TaskDTO:
+    properties:
+      personas:
+        items:
+          type: string
+        type: array
+      tags:
+        items:
+          type: string
+        type: array
+      task_description:
+        type: string
+      task_name:
+        type: string
+    type: object
+  docmodels.UserDTO:
+    properties:
+      email:
+        type: string
+      firebase_id:
+        type: string
+      password:
+        type: string
+      persona_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  models.File:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      file_name:
+        type: string
+      file_size:
+        type: integer
+      id:
+        example: 1
+        type: integer
+      object_key:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/models.Tag'
+        type: array
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.Guide:
+    properties:
+      author:
+        type: string
+      author_image_url:
+        type: string
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      date:
+        type: string
+      full_text:
+        type: string
+      guide_name:
+        type: string
+      id:
+        example: 1
+        type: integer
+      mins_read:
+        type: integer
+      sub_title:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/models.Tag'
+        type: array
+      title:
+        type: string
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - author
+    - author_image_url
+    - full_text
+    - guide_name
+    - sub_title
+    - title
+    type: object
+  models.Persona:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      persona_description:
+        type: string
+      persona_title:
+        type: string
+      tasks:
+        items:
+          $ref: '#/definitions/models.Task'
+        type: array
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - persona_description
+    - persona_title
+    type: object
+  models.Profile:
+    properties:
+      completed_onboarding_response:
+        type: boolean
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      date_of_birth:
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        type: string
+      onboarding_response:
+        type: string
+      phone_number:
+        type: string
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      user_id:
+        type: integer
+    required:
+    - date_of_birth
+    - name
+    - phone_number
+    - user_id
+    type: object
+  models.SubTask:
+    properties:
+      actions:
+        type: string
+      actions_state:
+        type: string
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      sub_task_description:
+        type: string
+      sub_task_name:
+        type: string
+      task_id:
+        type: integer
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - sub_task_description
+    - sub_task_name
+    - task_id
+    type: object
+  models.SubTaskProgress:
+    properties:
+      completed:
+        type: boolean
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      sub_task_id:
+        type: integer
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.Tag:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      files:
+        items:
+          $ref: '#/definitions/models.File'
+        type: array
+      guides:
+        items:
+          $ref: '#/definitions/models.Guide'
+        type: array
+      id:
+        example: 1
+        type: integer
+      name:
+        type: string
+      tasks:
+        items:
+          $ref: '#/definitions/models.Task'
+        type: array
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - name
+    type: object
+  models.Task:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      personas:
+        items:
+          $ref: '#/definitions/models.Persona'
+        type: array
+      tags:
+        items:
+          $ref: '#/definitions/models.Tag'
+        type: array
+      task_description:
+        type: string
+      task_name:
+        type: string
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+    required:
+    - task_description
+    - task_name
+    type: object
+  models.TaskProgress:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      progress:
+        type: integer
+      task_id:
+        type: integer
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      user_id:
+        type: integer
+    type: object
+  models.User:
+    properties:
+      created_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      email:
+        type: string
+      firebase_id:
+        type: string
+      id:
+        example: 1
+        type: integer
+      password:
+        type: string
+      persona_id:
+        type: integer
+      updated_at:
+        example: "2023-09-20T16:34:50Z"
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - firebase_id
+    - password
+    - username
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: oduneye.d@northeastern.edu and dupuguntla@northeastern.edu
+    name: David Oduneye and Akshay Dupuguntla
+  description: Backend Server for Legacy App
+  title: Legacy API
+  version: "1.0"
+paths:
+  /api/{fid}/filename:
+    get:
+      description: Returns a filename from file id
+      operationId: get-filename
+      parameters:
+      - description: FileID
+        in: path
+        name: fid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.File'
+        "404":
+          description: Failed to fetch file
+          schema:
+            type: string
+      summary: Gets a filename from file id
+      tags:
+      - file
+  /api/files/:
+    get:
+      description: Returns all file information
+      operationId: get-all-files
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.File'
+            type: array
+        "404":
+          description: Failed to fetch files
+          schema:
+            type: string
+      summary: Gets all file information
+      tags:
+      - file
+  /api/files/{fid}:
+    delete:
+      description: Deletes a file from file id
+      operationId: delete-file
+      parameters:
+      - description: FileID
+        in: path
+        name: fid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete file
+          schema:
+            type: string
+      summary: Deletes a file from file id
+      tags:
+      - file
+    get:
+      description: Returns a url to download a file from file id for a certain amount
+        of days
+      operationId: get-file
+      parameters:
+      - description: FileID
+        in: path
+        name: fid
+        required: true
+        type: string
+      - description: Days
+        in: query
+        name: days
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.File'
+        "404":
+          description: Failed to get presigned url
+          schema:
+            type: string
+      summary: Gets a url to download a file from file id for a certain amount of
+        days
+      tags:
+      - file
+  /api/files/{uid}:
+    post:
+      consumes:
+      - application/json
+      description: Creates a file
+      operationId: create-file
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: File
+        in: body
+        name: file
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.File'
+        "400":
+          description: Failed to create file
+          schema:
+            type: string
+      summary: Creates a file
+      tags:
+      - file
+  /api/files/{uid}/user:
+    get:
+      description: Returns all file information from user id
+      operationId: get-all-user-files
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Tag
+        in: query
+        name: tag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.File'
+            type: array
+        "404":
+          description: Failed to fetch files
+          schema:
+            type: string
+      summary: Gets all file information from user id
+      tags:
+      - file
+  /api/files/makepdf/{uid}:
+    post:
+      description: Returns a pdf from a json file
+      operationId: generate-pdf
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.File'
+        "404":
+          description: Failed to generate pdf
+          schema:
+            type: string
+      summary: Generates a pdf from a json file
+      tags:
+      - file
+  /api/guides/:
+    get:
+      description: Returns all guides
+      operationId: get-all-guides
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Guide'
+            type: array
+        "404":
+          description: Failed to fetch guides
+          schema:
+            type: string
+      summary: Gets all guides
+      tags:
+      - guide
+    post:
+      consumes:
+      - application/json
+      description: Creates a guide
+      operationId: create-guide
+      parameters:
+      - description: Guide
+        in: body
+        name: guide
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.GuideDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Guide'
+        "400":
+          description: Failed to create guide
+          schema:
+            type: string
+      summary: Creates a guide
+      tags:
+      - guide
+  /api/guides/{g_name}:
+    delete:
+      description: Deletes a guide
+      operationId: delete-guide
+      parameters:
+      - description: GuideName
+        in: path
+        name: g_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Guide successfully deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete guide
+          schema:
+            type: string
+      summary: Deletes a guide
+      tags:
+      - guide
+    get:
+      description: Returns a guide from guide id
+      operationId: get-guide
+      parameters:
+      - description: GuideName
+        in: path
+        name: g_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Guide'
+        "404":
+          description: Failed to fetch guide
+          schema:
+            type: string
+      summary: Gets a guide from guide id
+      tags:
+      - guide
+    patch:
+      consumes:
+      - application/json
+      description: Updates a guide
+      operationId: update-guide
+      parameters:
+      - description: GuideName
+        in: path
+        name: g_name
+        required: true
+        type: string
+      - description: Guide
+        in: body
+        name: guide
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.GuideDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Guide'
+        "400":
+          description: Failed to update guide
+          schema:
+            type: string
+      summary: Updates a guide
+      tags:
+      - guide
+  /api/personas/:
+    get:
+      description: Returns all personas
+      operationId: get-all-personas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Persona'
+            type: array
+        "404":
+          description: Failed to fetch personas
+          schema:
+            type: string
+      summary: Gets all personas
+      tags:
+      - persona
+    post:
+      consumes:
+      - application/json
+      description: Creates a persona
+      operationId: create-persona
+      parameters:
+      - description: Persona
+        in: body
+        name: persona
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.PersonaDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Persona'
+        "400":
+          description: Failed to create persona
+          schema:
+            type: string
+      summary: Creates a persona
+      tags:
+      - persona
+  /api/personas/{pid}:
+    delete:
+      description: Deletes a persona
+      operationId: delete-persona
+      parameters:
+      - description: PersonaID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Persona successfully deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete persona
+          schema:
+            type: string
+      summary: Deletes a persona
+      tags:
+      - persona
+    get:
+      description: Returns a persona from persona id
+      operationId: get-persona
+      parameters:
+      - description: PersonaID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Persona'
+        "404":
+          description: Failed to fetch persona
+          schema:
+            type: string
+      summary: Gets a persona from persona id
+      tags:
+      - persona
+    patch:
+      consumes:
+      - application/json
+      description: Updates a persona
+      operationId: update-persona
+      parameters:
+      - description: PersonaID
+        in: path
+        name: pid
+        required: true
+        type: string
+      - description: Persona
+        in: body
+        name: persona
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.PersonaDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Persona'
+        "400":
+          description: Failed to update persona
+          schema:
+            type: string
+      summary: Updates a persona
+      tags:
+      - persona
+  /api/personas/{pid}/tasks:
+    get:
+      description: Returns all tasks for a persona
+      operationId: get-persona-tasks
+      parameters:
+      - description: PersonaID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "404":
+          description: Failed to fetch persona tasks
+          schema:
+            type: string
+      summary: Gets all tasks for a persona
+      tags:
+      - persona
+  /api/profiles/:
+    get:
+      description: Returns all profiles
+      operationId: get-all-profiles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Profile'
+            type: array
+        "404":
+          description: Failed to fetch profiles
+          schema:
+            type: string
+      summary: Gets all profiles
+      tags:
+      - profile
+    post:
+      consumes:
+      - application/json
+      description: Creates a profile
+      operationId: create-profile
+      parameters:
+      - description: Profile
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.ProfileDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "400":
+          description: Failed to create profile
+          schema:
+            type: string
+      summary: Creates a profile
+      tags:
+      - profile
+  /api/profiles/{pid}:
+    delete:
+      description: Deletes a profile
+      operationId: delete-profile
+      parameters:
+      - description: ProfileID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted profile
+          schema:
+            type: string
+        "404":
+          description: Failed to delete profile
+          schema:
+            type: string
+      summary: Deletes a profile
+      tags:
+      - profile
+    get:
+      description: Returns a profile from profile id
+      operationId: get-profile
+      parameters:
+      - description: ProfileID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "404":
+          description: Failed to fetch profile
+          schema:
+            type: string
+      summary: Gets a profile from profile id
+      tags:
+      - profile
+    patch:
+      consumes:
+      - application/json
+      description: Updates a profile
+      operationId: update-profile
+      parameters:
+      - description: ProfileID
+        in: path
+        name: pid
+        required: true
+        type: string
+      - description: Profile
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.ProfileDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "400":
+          description: Failed to update profile
+          schema:
+            type: string
+      summary: Updates a profile
+      tags:
+      - profile
+  /api/profiles/complete/{pid}:
+    patch:
+      consumes:
+      - application/json
+      description: Sets onboarding complete
+      operationId: set-onboarding-complete
+      parameters:
+      - description: ProfileID
+        in: path
+        name: pid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "400":
+          description: Failed to set onboarding complete
+          schema:
+            type: string
+      summary: Sets onboarding complete
+      tags:
+      - profile
+  /api/profiles/response/{pid}:
+    patch:
+      consumes:
+      - application/json
+      description: Inserts an onboarding response
+      operationId: insert-onboarding-response
+      parameters:
+      - description: ProfileID
+        in: path
+        name: pid
+        required: true
+        type: string
+      - description: OnboardingResponse
+        in: body
+        name: onboardingResponse
+        required: true
+        schema:
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "400":
+          description: Failed to insert onboarding response
+          schema:
+            type: string
+      summary: Inserts an onboarding response
+      tags:
+      - profile
+  /api/progresses/{uid}/{tid}:
+    get:
+      description: Get all subtask progresses for a specific task of a user
+      operationId: get-all-subtask-progress
+      parameters:
+      - description: User ID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Task ID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SubTaskProgress'
+            type: array
+        "404":
+          description: Failed to fetch all subtask progresses of task
+          schema:
+            type: string
+      summary: Get all subtask progresses of a task
+      tags:
+      - progress
+  /api/progresses/subtask/{uid}/{sid}:
+    get:
+      description: Get progress of a specific subtask for a user
+      operationId: get-subtask-progress
+      parameters:
+      - description: User ID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Subtask ID
+        in: path
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubTaskProgress'
+        "404":
+          description: Failed to fetch subtask progress
+          schema:
+            type: string
+      summary: Get subtask progress
+      tags:
+      - progress
+  /api/progresses/subtask/{uid}/{sid}/complete:
+    put:
+      description: Mark a subtask as completed for a user
+      operationId: complete-subtask-progress
+      parameters:
+      - description: User ID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Subtask ID
+        in: path
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubTaskProgress'
+        "404":
+          description: Failed to complete subtask progress
+          schema:
+            type: string
+      summary: Complete subtask progress
+      tags:
+      - progress
+  /api/progresses/task/{uid}/{tid}:
+    get:
+      description: Get progress of a specific task for a user
+      operationId: get-task-progress
+      parameters:
+      - description: User ID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Task ID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaskProgress'
+        "404":
+          description: Failed to fetch task progress
+          schema:
+            type: string
+      summary: Get task progress
+      tags:
+      - progress
+  /api/subtasks/:
+    get:
+      description: Returns all subtasks
+      operationId: get-all-subtasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SubTask'
+            type: array
+        "404":
+          description: Failed to fetch subtasks
+          schema:
+            type: string
+      summary: Gets all subtasks
+      tags:
+      - subtask
+    post:
+      consumes:
+      - application/json
+      description: Creates a subtask
+      operationId: create-subtask
+      parameters:
+      - description: SubTask
+        in: body
+        name: subtask
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.SubTaskDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubTask'
+        "400":
+          description: Failed to create subtask
+          schema:
+            type: string
+      summary: Creates a subtask
+      tags:
+      - subtask
+  /api/subtasks/{sid}:
+    delete:
+      description: Deletes a subtask
+      operationId: delete-subtask
+      parameters:
+      - description: SubTaskID
+        in: path
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Subtask successfully deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete subtask
+          schema:
+            type: string
+      summary: Deletes a subtask
+      tags:
+      - subtask
+    get:
+      description: Returns a subtask from subtask id
+      operationId: get-subtask
+      parameters:
+      - description: SubTaskID
+        in: path
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubTask'
+        "404":
+          description: Failed to fetch subtask
+          schema:
+            type: string
+      summary: Gets a subtask from subtask id
+      tags:
+      - subtask
+    patch:
+      consumes:
+      - application/json
+      description: Updates a subtask
+      operationId: update-subtask
+      parameters:
+      - description: SubTaskID
+        in: path
+        name: sid
+        required: true
+        type: string
+      - description: SubTask
+        in: body
+        name: subtask
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.SubTaskDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.SubTask'
+        "400":
+          description: Failed to update subtask
+          schema:
+            type: string
+      summary: Updates a subtask
+      tags:
+      - subtask
+  /api/subtasks/{sid}/actions:
+    get:
+      description: Returns all actions from subtask id
+      operationId: get-actions
+      parameters:
+      - description: SubTaskID
+        in: path
+        name: sid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.SubTask'
+            type: array
+        "404":
+          description: Failed to fetch subtask
+          schema:
+            type: string
+      summary: Gets all actions from subtask id
+      tags:
+      - subtask
+  /api/tasks/:
+    get:
+      description: Returns all tasks
+      operationId: get-all-tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "404":
+          description: Failed to fetch tasks
+          schema:
+            type: string
+      summary: Gets all tasks
+      tags:
+      - task
+    post:
+      consumes:
+      - application/json
+      description: Creates a task
+      operationId: create-task
+      parameters:
+      - description: Task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.TaskDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "400":
+          description: Failed to create task
+          schema:
+            type: string
+      summary: Creates a task
+      tags:
+      - task
+  /api/tasks/{tid}:
+    delete:
+      description: Deletes a task
+      operationId: delete-task
+      parameters:
+      - description: TaskID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Task successfully deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete task
+          schema:
+            type: string
+      summary: Deletes a task
+      tags:
+      - task
+    get:
+      description: Returns a task from task id
+      operationId: get-task
+      parameters:
+      - description: TaskID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "404":
+          description: Failed to fetch task
+          schema:
+            type: string
+      summary: Gets a task from task id
+      tags:
+      - task
+    patch:
+      consumes:
+      - application/json
+      description: Updates a task
+      operationId: update-task
+      parameters:
+      - description: TaskID
+        in: path
+        name: tid
+        required: true
+        type: string
+      - description: Task
+        in: body
+        name: task
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.TaskDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Task'
+        "400":
+          description: Failed to update task
+          schema:
+            type: string
+      summary: Updates a task
+      tags:
+      - task
+  /api/tasks/{tid}/subtasks:
+    get:
+      description: Returns all subtasks of a task
+      operationId: get-all-subtasks-of-task
+      parameters:
+      - description: TaskID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "404":
+          description: Failed to fetch subtasks
+          schema:
+            type: string
+      summary: Gets all subtasks of a task
+      tags:
+      - task
+  /api/tasks/{tid}/tags:
+    get:
+      description: Returns a task tag from task id
+      operationId: get-task-tag
+      parameters:
+      - description: TaskID
+        in: path
+        name: tid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Failed to fetch task tag
+          schema:
+            type: string
+      summary: Gets a task tag from task id
+      tags:
+      - task
+  /api/tasks/{uid}/user:
+    get:
+      description: Returns all tasks of a user
+      operationId: get-all-user-tasks
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: Tag
+        in: query
+        name: tag
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Task'
+            type: array
+        "404":
+          description: Failed to fetch tasks
+          schema:
+            type: string
+      summary: Gets all tasks of a user
+      tags:
+      - task
+  /api/users/:
+    get:
+      description: Returns all users
+      operationId: get-all-users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "404":
+          description: Failed to fetch users
+          schema:
+            type: string
+      summary: Gets all users
+      tags:
+      - user
+    post:
+      consumes:
+      - application/json
+      description: Creates a user
+      operationId: post-user
+      parameters:
+      - description: User
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Failed to create user
+          schema:
+            type: string
+      summary: Creates a user
+      tags:
+      - user
+  /api/users/{uid}:
+    delete:
+      description: Deletes a user
+      operationId: delete-user
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User successfully deleted
+          schema:
+            type: string
+        "404":
+          description: Failed to delete user
+          schema:
+            type: string
+      summary: Deletes a user
+      tags:
+      - user
+    get:
+      description: Returns a user from user id
+      operationId: get-user
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Failed to fetch user
+          schema:
+            type: string
+      summary: Gets a user from user id
+      tags:
+      - user
+    patch:
+      consumes:
+      - application/json
+      description: Updates a user
+      operationId: update-user
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      - description: User
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/docmodels.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Failed to update user
+          schema:
+            type: string
+      summary: Updates a user
+      tags:
+      - user
+  /api/users/{uid}/persona:
+    get:
+      description: Returns a persona from user id
+      operationId: get-user-persona
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Persona'
+        "404":
+          description: Failed to fetch user persona
+          schema:
+            type: string
+      summary: Gets a user persona from user id
+      tags:
+      - user
+  /api/users/{uid}/profile:
+    get:
+      description: Returns a profile from user id
+      operationId: get-user-profile
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Profile'
+        "404":
+          description: Failed to fetch user profile
+          schema:
+            type: string
+      summary: Gets a user profile from user id
+      tags:
+      - user
+  /api/users/{uid}/progress:
+    post:
+      description: Initializes all tasks and subtasks for a user
+      operationId: initialize-user-progress
+      parameters:
+      - description: UserID
+        in: path
+        name: uid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Failed to initialize user progress
+          schema:
+            type: string
+      summary: Initializes user progress
+      tags:
+      - user
+  /api/users/firebaseid/{firebaseid}:
+    get:
+      description: Returns a user from firebase id
+      operationId: get-user-from-firebaseid
+      parameters:
+      - description: FirebaseID
+        in: path
+        name: firebaseid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Failed to fetch user
+          schema:
+            type: string
+      summary: Gets a user from firebase id
+      tags:
+      - user
+  /api/users/username/{username}:
+    get:
+      description: Returns a user from username
+      operationId: get-user-from-username
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Failed to fetch user
+          schema:
+            type: string
+      summary: Gets a user from username
+      tags:
+      - user
+swagger: "2.0"

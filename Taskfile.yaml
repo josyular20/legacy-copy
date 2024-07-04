@@ -1,0 +1,38 @@
+version: "3"
+
+tasks:
+  dev:
+    cmds:
+      - cd scripts && ./tunnel.sh
+
+  run:
+    cmds:
+      - cd scripts && ./run.sh 
+    
+  kill:
+    cmds:
+      - kill $(lsof -i :8080 | grep "main" | awk '{print $2}')
+
+  test-all:
+    cmds:
+      - cd server && go test ./tests/...
+
+  format:
+    cmds:
+      - cd server && go fmt ./... && cd ../client && yarn format
+  
+  insert:
+    cmds:
+      - cd scripts && ./insert-db.sh
+  
+  drop:
+    cmds:
+      - cd scripts && ./reset-db.sh
+  
+  reset:
+    cmds:
+      - cd scripts && ./reset-db.sh && ./insert-db.sh
+  
+  connect:
+    cmds:
+      - psql -U postgres -W -p 5432 -h localhost -d legacy

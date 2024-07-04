@@ -1,0 +1,2552 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Backend Server for Legacy App",
+        "title": "Legacy API",
+        "contact": {
+            "name": "David Oduneye and Akshay Dupuguntla",
+            "email": "oduneye.d@northeastern.edu and dupuguntla@northeastern.edu"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "paths": {
+        "/api/files/": {
+            "get": {
+                "description": "Returns all file information",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Gets all file information",
+                "operationId": "get-all-files",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.File"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch files",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/files/makepdf/{uid}": {
+            "post": {
+                "description": "Returns a pdf from a json file",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Generates a pdf from a json file",
+                "operationId": "generate-pdf",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to generate pdf",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/files/{fid}": {
+            "get": {
+                "description": "Returns a url to download a file from file id for a certain amount of days",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Gets a url to download a file from file id for a certain amount of days",
+                "operationId": "get-file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FileID",
+                        "name": "fid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Days",
+                        "name": "days",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to get presigned url",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a file from file id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Deletes a file from file id",
+                "operationId": "delete-file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FileID",
+                        "name": "fid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete file",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/files/{uid}": {
+            "post": {
+                "description": "Creates a file",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Creates a file",
+                "operationId": "create-file",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "File",
+                        "name": "file",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create file",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/files/{uid}/user": {
+            "get": {
+                "description": "Returns all file information from user id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Gets all file information from user id",
+                "operationId": "get-all-user-files",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tag",
+                        "name": "tag",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.File"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch files",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/guides/": {
+            "get": {
+                "description": "Returns all guides",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "guide"
+                ],
+                "summary": "Gets all guides",
+                "operationId": "get-all-guides",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Guide"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch guides",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a guide",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "guide"
+                ],
+                "summary": "Creates a guide",
+                "operationId": "create-guide",
+                "parameters": [
+                    {
+                        "description": "Guide",
+                        "name": "guide",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.GuideDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Guide"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create guide",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/guides/{g_name}": {
+            "get": {
+                "description": "Returns a guide from guide id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "guide"
+                ],
+                "summary": "Gets a guide from guide id",
+                "operationId": "get-guide",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "GuideName",
+                        "name": "g_name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Guide"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch guide",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a guide",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "guide"
+                ],
+                "summary": "Deletes a guide",
+                "operationId": "delete-guide",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "GuideName",
+                        "name": "g_name",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Guide successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete guide",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a guide",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "guide"
+                ],
+                "summary": "Updates a guide",
+                "operationId": "update-guide",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "GuideName",
+                        "name": "g_name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Guide",
+                        "name": "guide",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.GuideDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Guide"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update guide",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/personas/": {
+            "get": {
+                "description": "Returns all personas",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Gets all personas",
+                "operationId": "get-all-personas",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Persona"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch personas",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a persona",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Creates a persona",
+                "operationId": "create-persona",
+                "parameters": [
+                    {
+                        "description": "Persona",
+                        "name": "persona",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.PersonaDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Persona"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create persona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/personas/{pid}": {
+            "get": {
+                "description": "Returns a persona from persona id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Gets a persona from persona id",
+                "operationId": "get-persona",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PersonaID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Persona"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch persona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a persona",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Deletes a persona",
+                "operationId": "delete-persona",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PersonaID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Persona successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete persona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a persona",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Updates a persona",
+                "operationId": "update-persona",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PersonaID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Persona",
+                        "name": "persona",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.PersonaDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Persona"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update persona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/personas/{pid}/tasks": {
+            "get": {
+                "description": "Returns all tasks for a persona",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persona"
+                ],
+                "summary": "Gets all tasks for a persona",
+                "operationId": "get-persona-tasks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PersonaID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Task"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch persona tasks",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profiles/": {
+            "get": {
+                "description": "Returns all profiles",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Gets all profiles",
+                "operationId": "get-all-profiles",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Profile"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch profiles",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a profile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Creates a profile",
+                "operationId": "create-profile",
+                "parameters": [
+                    {
+                        "description": "Profile",
+                        "name": "profile",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.ProfileDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profiles/complete/{pid}": {
+            "patch": {
+                "description": "Sets onboarding complete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Sets onboarding complete",
+                "operationId": "set-onboarding-complete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProfileID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to set onboarding complete",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profiles/response/{pid}": {
+            "patch": {
+                "description": "Inserts an onboarding response",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Inserts an onboarding response",
+                "operationId": "insert-onboarding-response",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProfileID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "OnboardingResponse",
+                        "name": "onboardingResponse",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to insert onboarding response",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/profiles/{pid}": {
+            "get": {
+                "description": "Returns a profile from profile id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Gets a profile from profile id",
+                "operationId": "get-profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProfileID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a profile",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Deletes a profile",
+                "operationId": "delete-profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProfileID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a profile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "profile"
+                ],
+                "summary": "Updates a profile",
+                "operationId": "update-profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ProfileID",
+                        "name": "pid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Profile",
+                        "name": "profile",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.ProfileDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/progresses/subtask/{uid}/{sid}": {
+            "get": {
+                "description": "Get progress of a specific subtask for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "progress"
+                ],
+                "summary": "Get subtask progress",
+                "operationId": "get-subtask-progress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Subtask ID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SubTaskProgress"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch subtask progress",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/progresses/subtask/{uid}/{sid}/complete": {
+            "put": {
+                "description": "Mark a subtask as completed for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "progress"
+                ],
+                "summary": "Complete subtask progress",
+                "operationId": "complete-subtask-progress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Subtask ID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SubTaskProgress"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to complete subtask progress",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/progresses/task/{uid}/{tid}": {
+            "get": {
+                "description": "Get progress of a specific task for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "progress"
+                ],
+                "summary": "Get task progress",
+                "operationId": "get-task-progress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TaskProgress"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch task progress",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/progresses/{uid}/{tid}": {
+            "get": {
+                "description": "Get all subtask progresses for a specific task of a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "progress"
+                ],
+                "summary": "Get all subtask progresses of a task",
+                "operationId": "get-all-subtask-progress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Task ID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SubTaskProgress"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch all subtask progresses of task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/subtasks/": {
+            "get": {
+                "description": "Returns all subtasks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Gets all subtasks",
+                "operationId": "get-all-subtasks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SubTask"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch subtasks",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a subtask",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Creates a subtask",
+                "operationId": "create-subtask",
+                "parameters": [
+                    {
+                        "description": "SubTask",
+                        "name": "subtask",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.SubTaskDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SubTask"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create subtask",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/subtasks/{sid}": {
+            "get": {
+                "description": "Returns a subtask from subtask id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Gets a subtask from subtask id",
+                "operationId": "get-subtask",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SubTaskID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SubTask"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch subtask",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a subtask",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Deletes a subtask",
+                "operationId": "delete-subtask",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SubTaskID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Subtask successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete subtask",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a subtask",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Updates a subtask",
+                "operationId": "update-subtask",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SubTaskID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "SubTask",
+                        "name": "subtask",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.SubTaskDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.SubTask"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update subtask",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/subtasks/{sid}/actions": {
+            "get": {
+                "description": "Returns all actions from subtask id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "subtask"
+                ],
+                "summary": "Gets all actions from subtask id",
+                "operationId": "get-actions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SubTaskID",
+                        "name": "sid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.SubTask"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch subtask",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/": {
+            "get": {
+                "description": "Returns all tasks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Gets all tasks",
+                "operationId": "get-all-tasks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Task"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch tasks",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Creates a task",
+                "operationId": "create-task",
+                "parameters": [
+                    {
+                        "description": "Task",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.TaskDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{tid}": {
+            "get": {
+                "description": "Returns a task from task id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Gets a task from task id",
+                "operationId": "get-task",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TaskID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a task",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Deletes a task",
+                "operationId": "delete-task",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TaskID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a task",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Updates a task",
+                "operationId": "update-task",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TaskID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Task",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.TaskDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Task"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update task",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{tid}/subtasks": {
+            "get": {
+                "description": "Returns all subtasks of a task",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Gets all subtasks of a task",
+                "operationId": "get-all-subtasks-of-task",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TaskID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Task"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch subtasks",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{tid}/tags": {
+            "get": {
+                "description": "Returns a task tag from task id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Gets a task tag from task id",
+                "operationId": "get-task-tag",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "TaskID",
+                        "name": "tid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch task tag",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tasks/{uid}/user": {
+            "get": {
+                "description": "Returns all tasks of a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "task"
+                ],
+                "summary": "Gets all tasks of a user",
+                "operationId": "get-all-user-tasks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tag",
+                        "name": "tag",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Task"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch tasks",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/": {
+            "get": {
+                "description": "Returns all users",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets all users",
+                "operationId": "get-all-users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.User"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch users",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Creates a user",
+                "operationId": "post-user",
+                "parameters": [
+                    {
+                        "description": "User",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.UserDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to create user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/firebaseid/{firebaseid}": {
+            "get": {
+                "description": "Returns a user from firebase id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets a user from firebase id",
+                "operationId": "get-user-from-firebaseid",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FirebaseID",
+                        "name": "firebaseid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/username/{username}": {
+            "get": {
+                "description": "Returns a user from username",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets a user from username",
+                "operationId": "get-user-from-username",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Username",
+                        "name": "username",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{uid}": {
+            "get": {
+                "description": "Returns a user from user id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets a user from user id",
+                "operationId": "get-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Deletes a user",
+                "operationId": "delete-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User successfully deleted",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to delete user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Updates a user",
+                "operationId": "update-user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "User",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/docmodels.UserDTO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to update user",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{uid}/persona": {
+            "get": {
+                "description": "Returns a persona from user id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets a user persona from user id",
+                "operationId": "get-user-persona",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Persona"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch user persona",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{uid}/profile": {
+            "get": {
+                "description": "Returns a profile from user id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Gets a user profile from user id",
+                "operationId": "get-user-profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Profile"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch user profile",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{uid}/progress": {
+            "post": {
+                "description": "Initializes all tasks and subtasks for a user",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Initializes user progress",
+                "operationId": "initialize-user-progress",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserID",
+                        "name": "uid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to initialize user progress",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/{fid}/filename": {
+            "get": {
+                "description": "Returns a filename from file id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Gets a filename from file id",
+                "operationId": "get-filename",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "FileID",
+                        "name": "fid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.File"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed to fetch file",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "docmodels.GuideDTO": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "author_image_url": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "full_text": {
+                    "type": "string"
+                },
+                "guide_name": {
+                    "type": "string"
+                },
+                "mins_read": {
+                    "type": "integer"
+                },
+                "sub_title": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "docmodels.PersonaDTO": {
+            "type": "object",
+            "properties": {
+                "persona_description": {
+                    "type": "string"
+                },
+                "persona_title": {
+                    "type": "string"
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "docmodels.ProfileDTO": {
+            "type": "object",
+            "properties": {
+                "completed_onboarding_response": {
+                    "type": "boolean"
+                },
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "onboarding_response": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/docmodels.UserDTO"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "docmodels.SubTaskDTO": {
+            "type": "object",
+            "properties": {
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "actions_state": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "subtask_description": {
+                    "type": "string"
+                },
+                "subtask_name": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "docmodels.TaskDTO": {
+            "type": "object",
+            "properties": {
+                "personas": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "task_description": {
+                    "type": "string"
+                },
+                "task_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "docmodels.UserDTO": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "firebase_id": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "persona_id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.File": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "file_name": {
+                    "type": "string"
+                },
+                "file_size": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "object_key": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tag"
+                    }
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Guide": {
+            "type": "object",
+            "required": [
+                "author",
+                "author_image_url",
+                "full_text",
+                "guide_name",
+                "sub_title",
+                "title"
+            ],
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "author_image_url": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "full_text": {
+                    "type": "string"
+                },
+                "guide_name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "mins_read": {
+                    "type": "integer"
+                },
+                "sub_title": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tag"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                }
+            }
+        },
+        "models.Persona": {
+            "type": "object",
+            "required": [
+                "persona_description",
+                "persona_title"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "persona_description": {
+                    "type": "string"
+                },
+                "persona_title": {
+                    "type": "string"
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Task"
+                    }
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                }
+            }
+        },
+        "models.Profile": {
+            "type": "object",
+            "required": [
+                "date_of_birth",
+                "name",
+                "phone_number",
+                "user_id"
+            ],
+            "properties": {
+                "completed_onboarding_response": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onboarding_response": {
+                    "type": "string"
+                },
+                "phone_number": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.SubTask": {
+            "type": "object",
+            "required": [
+                "sub_task_description",
+                "sub_task_name",
+                "task_id"
+            ],
+            "properties": {
+                "actions": {
+                    "type": "string"
+                },
+                "actions_state": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "sub_task_description": {
+                    "type": "string"
+                },
+                "sub_task_name": {
+                    "type": "string"
+                },
+                "task_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                }
+            }
+        },
+        "models.SubTaskProgress": {
+            "type": "object",
+            "properties": {
+                "completed": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "sub_task_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Tag": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "files": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.File"
+                    }
+                },
+                "guides": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Guide"
+                    }
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Task"
+                    }
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                }
+            }
+        },
+        "models.Task": {
+            "type": "object",
+            "required": [
+                "task_description",
+                "task_name"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "personas": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Persona"
+                    }
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Tag"
+                    }
+                },
+                "task_description": {
+                    "type": "string"
+                },
+                "task_name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                }
+            }
+        },
+        "models.TaskProgress": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "progress": {
+                    "type": "integer"
+                },
+                "task_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "required": [
+                "email",
+                "firebase_id",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "created_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firebase_id": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "password": {
+                    "type": "string"
+                },
+                "persona_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "example": "2023-09-20T16:34:50Z"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
